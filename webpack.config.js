@@ -15,7 +15,7 @@ module.exports = function config(env) {
     mode: 'production',
     entry: './src/index.tsx',
     output: {
-      path: path.resolve(__dirname, 'build'),
+      path: path.resolve(__dirname, 'dist'),
       filename: 'index.js',
       libraryTarget: 'umd'
     },
@@ -25,7 +25,7 @@ module.exports = function config(env) {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: 'build/index.html'
+        template: 'dist/index.html'
       }),
       new MiniCssExtractPlugin({ filename: 'index.css' })
     ],
