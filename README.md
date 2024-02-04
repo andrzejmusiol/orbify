@@ -7,12 +7,15 @@
 ## Tech used:
 1. React
 2. TypeScript
-3. Ladle
-4. MSW (Mocking adapter)
-5. Tanstack-query
-6. Jest
-7. Vite
-8. es-lint / prettier
+3. Axios
+4. Ladle (UI mock)
+5. MSW (Mocking adapter)
+6. Tanstack-query (API calls)
+7. Jest (testing)
+8. Vite (run engine)
+9. eslint / prettier (code quality)
+10. React-Hook-Form (form hanling)
+11. zod (form validation)
 
 ## CI
 1. Github Actions
