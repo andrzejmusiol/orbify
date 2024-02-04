@@ -15,12 +15,8 @@ const renderComponent = () => (
   </QueryClientProvider>
 )
 
-const setupDefaultMockData = () => {
-  wizardServiceMock.setupGetInfo()
-}
-
 export const WizardStory = () => {
   browser.resetHandlers()
-  setupDefaultMockData()
+  wizardServiceMock.setupPostMap()
   return renderComponent()
 }

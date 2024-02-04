@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
@@ -10,14 +10,16 @@ import Uploader from './components/uploader/Uploader'
 import SubmitButton from './components/buttons/SubmitButton'
 import { FromData } from '../types'
 import Error from './components/errors/Error'
+import usePostMap from '../../api/postMap'
 
 export const WizardWrapper = styled.div`
   max-width: 10rem;
 `
 
 const Wizard = () => {
+  const postMapMutation = usePostMap()
   const schema = yup.object({
-    name: yup.string().required().max(50),
+    name: yup.string().required().max(25),
     description: yup.string().required(),
     date: yup.string().required(),
     aoi: yup.string().required()
@@ -30,16 +32,27 @@ const Wizard = () => {
   const {
     handleSubmit,
     watch,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = methods
   const name = watch('name')
   const description = watch('description')
   const date = watch('date')
   const aoi = watch('aoi')
 
+  useEffect(() => {
+    if (postMapMutation.isSuccess) {
+      reset()
+    }
+  }, [postMapMutation.isSuccess, reset])
+
   const onSubmit: SubmitHandler<FromData> = (data) => {
     const val = schema.validate(data)
-    val.then((res) => console.warn(res)).catch((err) => console.warn(err))
+    val
+      .then(() => {
+        postMapMutation.mutate({ body: data })
+      })
+      .catch((err) => console.warn(err))
   }
 
   return (
@@ -53,6 +66,7 @@ const Wizard = () => {
           <Uploader />
           <SubmitButton disabled={!name || !description || !date || !aoi} />
         </form>
+        {postMapMutation.isError && <Error message="Something went wrong, please try again" />}
       </FormProvider>
     </WizardWrapper>
   )
