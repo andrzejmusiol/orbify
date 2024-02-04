@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+/.ladle/public/mockServiceWorker.js
 
 # testing
 /coverage
