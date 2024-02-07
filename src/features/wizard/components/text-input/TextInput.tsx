@@ -8,12 +8,7 @@ type Props = {
 const TextInput: FC<Props> = ({ placeholder }) => {
   const { register } = useFormContext()
   return (
-    <input
-      type="text"
-      placeholder={placeholder}
-      data-testid="text-input"
-      {...register('name', { required: true, maxLength: 1 })}
-    />
+    <input type="text" placeholder={placeholder} data-testid="text-input" {...register('name', { required: true })} />
   )
 }
 
