@@ -11,6 +11,7 @@ import SubmitButton from './components/buttons/SubmitButton'
 import { FromData } from '../types'
 import Error from './components/errors/Error'
 import usePostMap from '../../api/postMap'
+import MapOverview from './components/map/MapOverview'
 
 export const WizardWrapper = styled.div`
   max-width: 10rem;
@@ -50,9 +51,9 @@ const Wizard = () => {
     const val = schema.validate(data)
     val
       .then(() => {
-        postMapMutation.mutate({ body: data })
+        postMapMutation.mutate(data)
       })
-      .catch((err) => console.warn(err))
+      .catch((err) => console.error(err))
   }
 
   return (
@@ -66,8 +67,10 @@ const Wizard = () => {
           <Uploader />
           <SubmitButton disabled={!name || !description || !date || !aoi} />
         </form>
-        {postMapMutation.isError && <Error message="Something went wrong, please try again" />}
+        {postMapMutation.isError && <Error message="Something went wrong, please check coordinates and try again" />}
+        {postMapMutation.isSuccess && <Error message="Good job!" />}
       </FormProvider>
+      {aoi && <MapOverview aoi={JSON.parse(aoi)} />}
     </WizardWrapper>
   )
 }
