@@ -7,7 +7,8 @@ import Wizard from './Wizard'
 import '@testing-library/jest-dom'
 import 'jest-canvas-mock'
 
-jest.mock('./components/map/MapOverview', () => <div>MapComponentMock</div>)
+/* eslint-disable-next-line react/function-component-definition */
+jest.mock('./components/map/MapOverview', () => () => <div>MapComponentMock</div>)
 
 const mountComponent = () =>
   render(
