@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
 import * as yup from 'yup'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -9,13 +8,13 @@ import DatePicker from './components/date-picker/DatePicker'
 import Uploader from './components/uploader/Uploader'
 import SubmitButton from './components/buttons/SubmitButton'
 import { FromData } from '../types'
-import Error from './components/errors/Error'
+import Error from './components/notifications/Error'
 import usePostMap from '../../api/postMap'
 import MapOverview from './components/map/MapOverview'
-
-export const WizardWrapper = styled.div`
-  max-width: 10rem;
-`
+import Success from './components/notifications/Success'
+import { FormWrapper, WizardWrapper } from './components/styled-components'
+import Header from './components/header/Header'
+import MapPlaceholder from './components/map/MapPlaceholder'
 
 const Wizard = () => {
   const postMapMutation = usePostMap()
@@ -59,18 +58,19 @@ const Wizard = () => {
   return (
     <WizardWrapper data-testid="wizard">
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <TextInput placeholder="Name..." />
+        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+          <Header text="Map creation wizard" />
+          <TextInput placeholder="Map of exampl location..." />
           <Error message={errors.name?.message} />
-          <TextArea placeholder="Description..." />
+          <TextArea placeholder="This map represents..." />
           <DatePicker placeholder="Pick a date..." />
           <Uploader />
           <SubmitButton disabled={!name || !description || !date || !aoi} />
-        </form>
-        {postMapMutation.isError && <Error message="Something went wrong, please check coordinates and try again" />}
-        {postMapMutation.isSuccess && <Error message="Good job!" />}
+          {postMapMutation.isError && <Error message="Something went wrong, please check coordinates and try again" />}
+          {postMapMutation.isSuccess && <Success message="Good job! You made it!" />}
+        </FormWrapper>
       </FormProvider>
-      {aoi && <MapOverview aoi={JSON.parse(aoi)} />}
+      {aoi ? <MapOverview aoi={JSON.parse(aoi)} /> : <MapPlaceholder />}
     </WizardWrapper>
   )
 }

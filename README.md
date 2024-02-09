@@ -13,6 +13,8 @@ success or error message will be displayed.
 simple CI pipeline was configured
 7. To keep the project in good shape, and make it scalable, the [bulletproof-react](https://github.com/alan2207/bulletproof-react) file structure was implemented
 8. Ladle is used here to build, render and mock UI.
+9. Map displaying is handled by Leaflet Maps, but in the exception to convert coordinates reversed. Leaflet Maps reading coords as
+[y, x] instead [x, y] so to fix it, in the MapOverview component I've created the reversedCoordsForLeafletMap function.
 
 # How to use Wizard?
 Just fill the form fields, choose one of the files (AOI.txt or AOI_not_valid.txt) to test form behaviour.

@@ -2,17 +2,13 @@ import React, { FC } from 'react'
 /* eslint-disable-next-line import/no-extraneous-dependencies */
 import 'leaflet/dist/leaflet.css'
 import { MapContainer, Polygon, TileLayer } from 'react-leaflet'
-import styled from 'styled-components'
 import { AOI } from '../../../types'
+import { Map } from '../styled-components'
+import MapPlaceholder from './MapPlaceholder'
 
 type Props = {
   aoi: AOI
 }
-
-const MapWrapper = styled.div`
-  width: 20rem;
-  height: 20rem;
-`
 
 const MapOverview: FC<Props> = ({ aoi }) => {
   const {
@@ -25,11 +21,11 @@ const MapOverview: FC<Props> = ({ aoi }) => {
   const reversedCoordsForLeafletMap = coordinates[0]?.map((coordinate) => coordinate.reverse())
 
   if (!reversedCoordsForLeafletMap) {
-    return <div />
+    return <MapPlaceholder />
   }
 
   return (
-    <MapWrapper data-testid="map-overview">
+    <Map data-testid="map-overview">
       {reversedCoordsForLeafletMap.length && (
         <MapContainer
           style={{ width: '100%', height: '100%' }}
@@ -40,7 +36,7 @@ const MapOverview: FC<Props> = ({ aoi }) => {
           <Polygon positions={reversedCoordsForLeafletMap} />
         </MapContainer>
       )}
-    </MapWrapper>
+    </Map>
   )
 }
 export default MapOverview
