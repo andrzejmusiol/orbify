@@ -1,6 +1,7 @@
+/* eslint-disable testing-library/no-unnecessary-act, testing-library/await-async-events */
 import React from 'react'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { render, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import queryClient from '../../test/lib/tanstack-query'
 import Wizard from './Wizard'
@@ -43,7 +44,9 @@ describe('<Wizard />', () => {
       'aoi.txt'
     )
 
-    await userEvent.upload(fileUploader, file)
+    act(() => {
+      userEvent.upload(fileUploader, file)
+    })
 
     await screen.findByText('MapComponentMock')
   })

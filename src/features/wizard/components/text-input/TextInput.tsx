@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { Input, Label } from '../styled-components'
 
 type Props = {
   placeholder: string
@@ -8,7 +9,16 @@ type Props = {
 const TextInput: FC<Props> = ({ placeholder }) => {
   const { register } = useFormContext()
   return (
-    <input type="text" placeholder={placeholder} data-testid="text-input" {...register('name', { required: true })} />
+    <>
+      <Label htmlFor="name">Name of the map</Label>
+      <Input
+        type="text"
+        id="name"
+        placeholder={placeholder}
+        data-testid="text-input"
+        {...register('name', { required: true })}
+      />
+    </>
   )
 }
 
